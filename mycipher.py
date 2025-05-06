@@ -1,18 +1,18 @@
 import sys
 
-def ceasar_cipher(text, shift):
-    hidden = ""
-    for char in text:
-        if char.isalpha():
-            ascii_offset = 65 if char.isupper() else 97
-            hidden += chr((ord(char) - ascii_offset + shift) % 26 + ascii_offset)
-        else:
-            hidden+= char
+shift =int(sys.argv[1])
+message = ""
+for line in sys.stdin:
+    message += line.strip()
+message = message.upper()
 
-    return hidden
+message = ''.join([char for char in message if char.isalpha()])
 
-shift = int(sys.argv[1]) 
-message = input("Enter a message: ")
-hidden_message = ceasar_cipher(message, shift)
-print("Encrypted message:", hidden_message)
+hidden_message = ""
+for char in message:
+    if 'A' <= char <= 'Z':
+        new_char = chr(((ord(char) - ord('A') + shift) % 26) + ord('A'))
+        hidden_message += new_char
 
+for i in range(0, len(hidden_message), 5):
+    print(hidden_message[i:i+5], end=" ")
